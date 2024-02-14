@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:8.0.27
+    command: 'default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql  # Add a colon here
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=wordpress
+      - MYSQL_DATABASE=sada
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=sada1850
+    expose:
+      - 3306
+      - 33060
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=admin
+      - WORDPRESS_DB_PASSWORD=sada1850
+      - WORDPRESS_DB_NAME=sada
+volumes:
+  db_data:
